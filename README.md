@@ -1,3 +1,3 @@
-# ⚙ Taurine ⚙
+# ⚙ Taurine
 > *Pure adrenaline.*
 ---
