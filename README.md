@@ -1,2 +1,3 @@
-# Taurine
-code management
+# ⚙ Taurine ⚙
+> *Pure adrenaline.*
+---
