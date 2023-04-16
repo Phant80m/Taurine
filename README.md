@@ -1,3 +1,3 @@
 # ⚙ Taurine
-> *Pure adrenaline.*
+> *Pure Rust, Pure adrenaline. Its Taurine...*
 ---
