@@ -5,7 +5,11 @@ use std::{fs, process::Command};
 #[command(author, version, about, long_about = None)]
 struct Args {
     #[command(subcommand)]
-    subcommand: Init
+    subcommand: Init,
+    
+    ///install a pkg with pacman
+    #[arg(short, long)]
+    sync: String,
 }
 
 // sub command
@@ -15,6 +19,7 @@ enum Init{
         #[arg(short, long)]
         path: String,
     },
+
 }
 
 fn main() {
@@ -22,7 +27,19 @@ fn main() {
     
     match _args.subcommand {
         Init::Init { path } => {
-           println!("{}", path);
+            Command::new("cargo")
+                .arg("new")
+                .arg(path)
+                .output()
+                .expect("Failed to init cargo");
         }
     }
+    match _args.sync {
+        _ => Command::new("sudo")
+            .arg("pacman")
+            .arg("-S")
+            .arg(_args.sync)
+            .output()
+            .expect("failed to download pacman pkg"),
+    };
 }
