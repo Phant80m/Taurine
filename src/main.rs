@@ -1,16 +1,28 @@
-use std::env;
-use taurine::{help, version};
+use clap::{Parser, Subcommand};
+use std::{fs, process::Command};
+
+#[derive(Parser, Debug)]
+#[command(author, version, about, long_about = None)]
+struct Args {
+    #[command(subcommand)]
+    subcommand: Init
+}
+
+// sub command
+#[derive(Subcommand, Debug)]
+enum Init{
+    Init {
+        #[arg(short, long)]
+        path: String,
+    },
+}
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
-
-    if args.len() > 1 {
-        let command = &args[1];
-
-        match &command[..] {
-            "version" | "--version" | "-v" =>  version(),
-            "help" | "--help" | "-h" => help(),
-            _ => println!("not a valid command")
+    let _args = Args::parse();
+    
+    match _args.subcommand {
+        Init::Init { path } => {
+           println!("{}", path);
         }
     }
 }
