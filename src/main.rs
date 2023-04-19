@@ -1,15 +1,12 @@
 use clap::{Parser, Subcommand};
-use std::{fs, process::Command};
+use std::process::Command;
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 struct Args {
     #[command(subcommand)]
-    subcommand: Init,
+    subcommand: Option<Init>,
     
-    ///install a pkg with pacman
-    #[arg(short, long)]
-    sync: String,
 }
 
 // sub command
@@ -26,20 +23,14 @@ fn main() {
     let _args = Args::parse();
     
     match _args.subcommand {
-        Init::Init { path } => {
+        Some(Init::Init { path }) => {
             Command::new("cargo")
                 .arg("new")
                 .arg(path)
                 .output()
                 .expect("Failed to init cargo");
         }
+        None => eprintln!("error init cargo")
     }
-    match _args.sync {
-        _ => Command::new("sudo")
-            .arg("pacman")
-            .arg("-S")
-            .arg(_args.sync)
-            .output()
-            .expect("failed to download pacman pkg"),
-    };
+
 }
